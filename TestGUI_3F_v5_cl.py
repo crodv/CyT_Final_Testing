@@ -1782,6 +1782,7 @@ class App(ctk.CTk):
         mode_text = "SIMULADOR" if reader.sim else "HARDWARE"
         mode_color = "#dc2626" if reader.sim else "#16a34a"
         ttk.Label(header, text=mode_text, foreground=mode_color).pack(side="right")
+        ttk.Label(header, text="By Claudio Rodriguez", foreground="#6b7280").pack(side="right", padx=(0, 12))
 
         stats = ttk.Frame(top)
         stats.pack(fill="x", padx=8, pady=(0, 6))
