@@ -1489,7 +1489,8 @@ class App(ctk.CTk):
             font=("Segoe UI", 18, "italic"),
         ).pack(side="left")
 
-        mode_text = f"Modo: {'SIMULADOR' if self.hw.sim else 'HARDWARE'}"
+        sim_mode = self.hw.sim or self.hw.sim_gpio or not self.hw.ds_devices
+        mode_text = f"Modo: {'SIMULADOR' if sim_mode else 'HARDWARE'}"
         ctk.CTkLabel(
             top_bar,
             text=mode_text,
