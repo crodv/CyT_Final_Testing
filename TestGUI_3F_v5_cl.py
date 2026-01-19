@@ -765,6 +765,7 @@ class FermenterPanel(ctk.CTkFrame):
             self._sim_ambient = None
         self._last_update = now()
         self.t_str = tk.StringVar(value=f"{self.t:.1f}")
+        self.flow_str = tk.StringVar(value="-- SCCM")
         self.sp = tk.DoubleVar(value=20.0)
         self.band = tk.DoubleVar(value=0.5)
         self.manual_mode = tk.BooleanVar(value=False)
@@ -826,6 +827,16 @@ class FermenterPanel(ctk.CTkFrame):
             textvariable=self.t_str,
             font=("Segoe UI", 28, "bold"),
             text_color="#f97316",
+        ).pack(padx=4, pady=4)
+
+        ctk.CTkLabel(top, text="Caudal (SCCM)", font=("Segoe UI", 12)).grid(row=2, column=0, pady=(0, 4))
+        flow_box = ctk.CTkFrame(top, fg_color="#020617")
+        flow_box.grid(row=3, column=0, pady=(0, 8))
+        ctk.CTkLabel(
+            flow_box,
+            textvariable=self.flow_str,
+            font=("Segoe UI", 18, "bold"),
+            text_color="#38bdf8",
         ).pack(padx=4, pady=4)
 
         # SP (con caja similar a T)
@@ -1381,6 +1392,9 @@ class FermenterPanel(ctk.CTkFrame):
         else:
             self.t = self.hw.read_temp_ds18b20(index=int(self.name[1:]) - 1)
         self.t_str.set(f"{self.t:.1f}")
+        samples = self.app.flow_samples.get(self.name, [])
+        if samples:
+            self.flow_str.set(f"{samples[-1][1]:.2f} SCCM")
 
         if not self.manual_mode.get():
             sp = float(self.sp.get())
