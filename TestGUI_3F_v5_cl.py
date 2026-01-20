@@ -19,7 +19,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
 import customtkinter as ctk
-from PIL import Image, ImageTk  # <<<<<< IMPORT PARA EL LOGO
+from PIL import Image  # <<<<<< IMPORT PARA EL LOGO
 
 _ADS_I2C = None
 
@@ -1796,18 +1796,8 @@ class App(ctk.CTk):
         ttk.Label(header, text="Caudalímetro CO2 (4-20 mA)", font=("Segoe UI", 14, "bold")).pack(side="left")
         mode_text = "SIMULADOR" if reader.sim else "HARDWARE"
         mode_color = "#dc2626" if reader.sim else "#16a34a"
-        logo_path = os.path.join(os.path.dirname(__file__), "blogo.png")
-        if os.path.exists(logo_path):
-            try:
-                pil_img = Image.open(logo_path)
-                pil_img.thumbnail((240, 96))
-                flow_logo = ImageTk.PhotoImage(pil_img)
-                logo_label = ttk.Label(header, image=flow_logo)
-                logo_label.image = flow_logo
-                logo_label.pack(side="right", padx=(0, 8))
-            except Exception as e:
-                print(f"[UI] No se pudo cargar el logo {logo_path}: {e}")
         ttk.Label(header, text=mode_text, foreground=mode_color).pack(side="right")
+        ttk.Label(header, text="By Claudio Rodriguez", foreground="#6b7280").pack(side="right", padx=(0, 12))
 
         stats = ttk.Frame(top)
         stats.pack(fill="x", padx=8, pady=(0, 6))
